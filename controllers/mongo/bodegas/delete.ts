@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import mongoose from "mongoose";
 import {
     AuditoryModel,
     BackupBodegaModel,
@@ -14,7 +15,7 @@ export default async function handler(
     const userName = req.headers.username as string;
 
     // Buscar la bodega
-    const bodega = await BodegaModel.findById(_id);
+    const bodega = await BodegaModel.findOne({ _id: new mongoose.Types.ObjectId(_id) });
     if (!bodega) {
         return res.status(404).json({
             message: "Bodega no encontrada",
